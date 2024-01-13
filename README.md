@@ -6,7 +6,7 @@ This dbt macro is designed to transform data written by the Portable ([portable.
 
 Portable writes data in JSON format, and this macro efficiently converts the payload back into standard columns and rows. This is particularly useful for dbt users who need to integrate Google Sheets data into their analytical workflows.
 
-See [Example Output](#Example-outuput) for more details.
+See [Example Output](#example-outuput) for more details.
 
 ## Limitations
 Currently this package is designed to work with `dbt-snowflake` only. Cross database compatibility may be added in the future.
