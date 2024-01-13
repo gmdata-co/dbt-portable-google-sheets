@@ -23,6 +23,36 @@ packages:
 
 Run `dbt deps` to install the package.
 
+# Macros
+## portable_google_sheets ([source](macros/portable_google_sheets.sql))
+Converts payload to multiple columns.
+
+## Arguments
+
+- **`source_name`**: 
+  - **Description**: Name of the source in sources.yml.
+  - **Type**: String
+  - **Required**
+
+- **`source_table`**:
+  - **Description**: Name of the table within the source.
+  - **Type**: String
+  - **Required**
+
+- **`include_metadata`**:
+  - **Description**: Boolean flag to include Portable's metadata columns:
+    - `_portable id`: we rename Portable's `id` to `_portable_id` so it does not conflict with any `id` column in your source data.
+    - `_portable_extracted`: column shows as-is.
+  - **Type**: Boolean
+  - **Optional**
+  - **Default**: `True`
+
+- **`keep_sort`**:
+  - **Description**: Boolean flag to maintain sort order.
+  - **Type**: Boolean
+  - **Optional**
+  - **Default**: `False`
+
 ## Usage
 
 ### Step 1
@@ -56,31 +86,6 @@ or
 
 The macro will create the SQL needed to split this varient data into seperate columns.
 
-### Parameters
-
-- **`source_name`**: 
-  - **Description**: Name of the source in sources.yml.
-  - **Type**: String
-  - **Required**
-
-- **`source_table`**:
-  - **Description**: Name of the table within the source.
-  - **Type**: String
-  - **Required**
-
-- **`include_metadata`**:
-  - **Description**: Boolean flag to include Portable's metadata columns:
-    - `_portable id`: we rename Portable's `id` to `_portable_id` so it does not conflict with any `id` column in your source data.
-    - `_portable_extracted`: column shows as-is.
-  - **Type**: Boolean
-  - **Optional**
-  - **Default**: `True`
-
-- **`keep_sort`**:
-  - **Description**: Boolean flag to maintain sort order.
-  - **Type**: Boolean
-  - **Optional**
-  - **Default**: `False`
 
 ## Example Output
 
