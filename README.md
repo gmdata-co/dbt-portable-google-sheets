@@ -2,7 +2,12 @@
 
 ## Introduction
 
-This dbt macro is designed to transform data written by the Portable (portable.io) Google Sheets connector. Portable writes data in JSON format, and this macro efficiently converts it back into standard columns and rows. This is particularly useful for dbt users who need to integrate Google Sheets data into their analytical workflows.
+This dbt macro is designed to transform data written by the Portable ([portable.io](https://portable.io)) Google Sheets Connector in your Snowflake account.
+
+Portable writes data in JSON format, and this macro efficiently converts the payload back into standard columns and rows. This is particularly useful for dbt users who need to integrate Google Sheets data into their analytical workflows.
+
+## Limitations
+Currently this package is designed to work with `dbt-snowflake` only. Cross database compatibility may be added in the future.
 
 ## Installation
 
@@ -18,13 +23,37 @@ Run `dbt deps` to install the package.
 
 ## Usage
 
+### Step 1
+First, ensure you have a dbt source created for the table loaded by Portable.  Example `sources.yml`:
+
+```
+version: 2
+sources:
+  - name: google_sheets
+    database: raw  
+    schema: public  
+    tables:
+      - name: my_sheets_data
+        identifier: google_sheets_spreadsheet_values_8589937133
+```
+In this example we used the `identifier` property for the unique table name, but gave the `name` a very simple and short name.
+
+### Step 2
 
 In an empty .sql file (dbt model), call the macro:
 
-``````
+```
+{{ portable_google_sheets.portable_google_sheets( 'google_sheets', 'my_sheets_data') }}
+```
 
-{{ portable_google_sheets( 'google_sheets', 'sample_data', include_metadata=True, keep_sort=False ) }}
-``````
+or
+
+```
+{{ portable_google_sheets.portable_google_sheets( 'google_sheets', 'my_sheets_data', include_metadata=True, keep_sort=False ) }}
+```
+
+The macro will create the SQL needed to split this varient data into seperate columns.
+
 ### Parameters
 
 - **`source_name`**: 
@@ -50,6 +79,23 @@ In an empty .sql file (dbt model), call the macro:
   - **Type**: Boolean
   - **Optional**
   - **Default**: `False`
+
+## Example Output
+
+If you simply `select * from {{source('','')}}`, you may get data like this:
+
+| _PORTABLE_EXTRACTED      | ID | ROWDATA                                                                                                                  |
+|--------------------------|----|---------------------------------------------------------------------------------------------------------------------------|
+| 2023-12-15T02:42:57      | 0  | [ "ID", "USER_ID", "START_DATE", "END_DATE", "OVERLAPPING" ]                                         |
+| 2023-12-15T02:42:57      | 1  | [ "RR0079XMX", "0006CC621", "2020-11-30T12:13:05Z", "2020-11-30T07:28:24Z", "TRUE" ]      |
+
+If instead you use the macro, it will render like this:
+
+| ID        | USER_ID   | START_DATE            | END_DATE                    | OVERLAPPING | _PORTABLE_ID | _PORTABLE_EXTRACTED      |
+|-----------|-----------|-----------------------|-----------------------------|-------------|--------------|--------------------------|
+| RR0079XMX | 0006CC621 | 2020-11-30T12:13:05Z  | 2020-11-30T07:28:24Z        | TRUE        | 1            | 2023-12-15T02:42:57      |
+
+ID 0 becomes the headers and everything else becomes the data below the headers.
 
 ## Assumptions
 This macro assumes that your data in google sheets looks like data.  That is to say it is organized in columns and rows and has headers.
