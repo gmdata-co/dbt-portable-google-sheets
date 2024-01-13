@@ -1,6 +1,26 @@
+```
+  ____            _        _     _        _                      
+ |  _ \ ___  _ __| |_ __ _| |__ | | ___  (_) ___                 
+ | |_) / _ \| '__| __/ _` | '_ \| |/ _ \ | |/ _ \                
+ |  __/ (_) | |  | || (_| | |_) | |  __/_| | (_) |               
+ |_|   \___/|_|   \__\__,_|_.__/|_|\___(_)_|\___/                
+   ____                   _        ____  _               _       
+  / ___| ___   ___   __ _| | ___  / ___|| |__   ___  ___| |_ ___ 
+ | |  _ / _ \ / _ \ / _` | |/ _ \ \___ \| '_ \ / _ \/ _ \ __/ __|
+ | |_| | (_) | (_) | (_| | |  __/  ___) | | | |  __/  __/ |_\__ \
+  \____|\___/ \___/ \__, |_|\___| |____/|_| |_|\___|\___|\__|___/
+  _____             |___/   __                                   
+ |_   _| __ __ _ _ __  ___ / _| ___  _ __ _ __ ___   ___ _ __    
+   | || '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \ / _ \ '__|   
+   | || | | (_| | | | \__ \  _| (_) | |  | | | | | |  __/ |      
+   |_||_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|\___|_|      
+                                                                
+```
+
+
 # dbt Portable Google Sheets Transformer
 
-## Introduction
+## Purpose
 
 This dbt macro is designed to transform data written by the Portable ([portable.io](https://portable.io)) Google Sheets Connector in your Snowflake account.
 
@@ -25,9 +45,9 @@ Run `dbt deps` to install the package.
 
 # Macros
 ## portable_google_sheets ([source](macros/portable_google_sheets.sql))
-Converts payload to multiple columns.
+Converts payload `ROWDATA` column to multiple columns with headers.
 
-## Arguments
+### Arguments
 
 - **`source_name`**: 
   - **Description**: Name of the source in sources.yml.
@@ -53,9 +73,9 @@ Converts payload to multiple columns.
   - **Optional**
   - **Default**: `False`
 
-## Usage
+### Usage
 
-### Step 1
+#### Step 1
 First, ensure you have a dbt source created for the table loaded by Portable.  Example `sources.yml`:
 
 ```
@@ -70,7 +90,7 @@ sources:
 ```
 In this example we used the `identifier` property for the unique table name, but gave the `name` a very simple and short name.
 
-### Step 2
+#### Step 2
 
 In an empty .sql file (dbt model), call the macro:
 
