@@ -6,6 +6,8 @@ This dbt macro is designed to transform data written by the Portable ([portable.
 
 Portable writes data in JSON format, and this macro efficiently converts the payload back into standard columns and rows. This is particularly useful for dbt users who need to integrate Google Sheets data into their analytical workflows.
 
+See [Example Output](#Example-outuput) for more details.
+
 ## Limitations
 Currently this package is designed to work with `dbt-snowflake` only. Cross database compatibility may be added in the future.
 
@@ -92,7 +94,7 @@ The data from Google Sheets will be in a single `varient` column called `ROWDATA
 | 2023-12-15T02:42:57      | 0  | [ "ID", "USER_ID", "START_DATE", "END_DATE", "OVERLAPPING" ]                                         |
 | 2023-12-15T02:42:57      | 1  | [ "RR0079XMX", "0006CC621", "2020-11-30T12:13:05Z", "2020-11-30T07:28:24Z", "TRUE" ]      |
 
-If instead you use the macro
+If instead you use the macro:
 
 `{{ portable_google_sheets.portable_google_sheets( 'google_sheets', 'my_sheets_data', include_metadata=True, keep_sort=True ) }}`
 
