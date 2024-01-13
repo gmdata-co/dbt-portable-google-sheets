@@ -1,9 +1,0 @@
-version: 2
-
-sources:
-  - name: google_sheets
-    database: raw  
-    schema: public  
-    tables:
-      - name: sample_data
-        identifier: google_sheets_spreadsheet_values_8589937133
