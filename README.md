@@ -94,7 +94,7 @@ The data from Google Sheets will be in a single `varient` column called `ROWDATA
 
 If instead you use the macro
 
-{{ portable_google_sheets.portable_google_sheets( 'google_sheets', 'my_sheets_data', include_metadata=True, keep_sort=True ) }}
+`{{ portable_google_sheets.portable_google_sheets( 'google_sheets', 'my_sheets_data', include_metadata=True, keep_sort=True ) }}`
 
 It will render like this:
 
