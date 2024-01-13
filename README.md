@@ -82,14 +82,21 @@ The macro will create the SQL needed to split this varient data into seperate co
 
 ## Example Output
 
-If you simply `select * from {{source('','')}}`, you may get data like this:
+If you don't use our macro and simply select from the source directly:
+`select * from {{source('google_sheets','my_sheets_data')}}`
+
+The data from Google Sheets will be in a single `varient` column called `ROWDATA`:
 
 | _PORTABLE_EXTRACTED      | ID | ROWDATA                                                                                                                  |
 |--------------------------|----|---------------------------------------------------------------------------------------------------------------------------|
 | 2023-12-15T02:42:57      | 0  | [ "ID", "USER_ID", "START_DATE", "END_DATE", "OVERLAPPING" ]                                         |
 | 2023-12-15T02:42:57      | 1  | [ "RR0079XMX", "0006CC621", "2020-11-30T12:13:05Z", "2020-11-30T07:28:24Z", "TRUE" ]      |
 
-If instead you use the macro, it will render like this:
+If instead you use the macro
+
+{{ portable_google_sheets.portable_google_sheets( 'google_sheets', 'my_sheets_data', include_metadata=True, keep_sort=True ) }}
+
+It will render like this:
 
 | ID        | USER_ID   | START_DATE            | END_DATE                    | OVERLAPPING | _PORTABLE_ID | _PORTABLE_EXTRACTED      |
 |-----------|-----------|-----------------------|-----------------------------|-------------|--------------|--------------------------|
