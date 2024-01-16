@@ -1,23 +1,3 @@
-```
-  ____            _        _     _        _                      
- |  _ \ ___  _ __| |_ __ _| |__ | | ___  (_) ___                 
- | |_) / _ \| '__| __/ _` | '_ \| |/ _ \ | |/ _ \                
- |  __/ (_) | |  | || (_| | |_) | |  __/_| | (_) |               
- |_|   \___/|_|   \__\__,_|_.__/|_|\___(_)_|\___/                
-   ____                   _        ____  _               _       
-  / ___| ___   ___   __ _| | ___  / ___|| |__   ___  ___| |_ ___ 
- | |  _ / _ \ / _ \ / _` | |/ _ \ \___ \| '_ \ / _ \/ _ \ __/ __|
- | |_| | (_) | (_) | (_| | |  __/  ___) | | | |  __/  __/ |_\__ \
-  \____|\___/ \___/ \__, |_|\___| |____/|_| |_|\___|\___|\__|___/
-  _____             |___/   __                                   
- |_   _| __ __ _ _ __  ___ / _| ___  _ __ _ __ ___   ___ _ __    
-   | || '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \ / _ \ '__|   
-   | || | | (_| | | | \__ \  _| (_) | |  | | | | | |  __/ |      
-   |_||_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|\___|_|      
-                                                                
-```
-
-
 # dbt Portable Google Sheets Transformer
 
 ## Purpose
@@ -37,8 +17,8 @@ To use this macro in your dbt project, add the following to your `packages.yml` 
 
 ```yaml
 packages:
-  - git: "https://github.com/gmdata-co/dbt-portable-google-sheets-transformer.git"
-    revision: 0.1.0
+  - package: gmdata-co/portable_google_sheets
+    version: 0.1.1
 ```
 
 Run `dbt deps` to install the package.
@@ -46,32 +26,6 @@ Run `dbt deps` to install the package.
 # Macros
 ## portable_google_sheets ([source](macros/portable_google_sheets.sql))
 Converts payload `ROWDATA` column to multiple columns with headers.
-
-### Arguments
-
-- **`source_name`**: 
-  - **Description**: Name of the source in sources.yml.
-  - **Type**: String
-  - **Required**
-
-- **`source_table`**:
-  - **Description**: Name of the table within the source.
-  - **Type**: String
-  - **Required**
-
-- **`include_metadata`**:
-  - **Description**: Boolean flag to include Portable's metadata columns:
-    - `_portable id`: we rename Portable's `id` to `_portable_id` so it does not conflict with any `id` column in your source data.
-    - `_portable_extracted`: column shows as-is.
-  - **Type**: Boolean
-  - **Optional**
-  - **Default**: `True`
-
-- **`keep_sort`**:
-  - **Description**: Boolean flag to maintain sort order.
-  - **Type**: Boolean
-  - **Optional**
-  - **Default**: `False`
 
 ### Usage
 
@@ -105,6 +59,32 @@ or
 ```
 
 The macro will create the SQL needed to split this varient data into seperate columns.
+
+### Arguments
+
+- **`source_name`**: 
+  - **Description**: Name of the source in sources.yml.
+  - **Type**: String
+  - **Required**
+
+- **`source_table`**:
+  - **Description**: Name of the table within the source.
+  - **Type**: String
+  - **Required**
+
+- **`include_metadata`**:
+  - **Description**: Boolean flag to include Portable's metadata columns:
+    - `_portable id`: we rename Portable's `id` to `_portable_id` so it does not conflict with any `id` column in your source data.
+    - `_portable_extracted`: column shows as-is.
+  - **Type**: Boolean
+  - **Optional**
+  - **Default**: `True`
+
+- **`keep_sort`**:
+  - **Description**: Boolean flag to maintain sort order.
+  - **Type**: Boolean
+  - **Optional**
+  - **Default**: `False`
 
 
 ## Example Output
@@ -142,7 +122,8 @@ The portable_google_sheets macro performs the following operations:
 1. Extracts column names from the JSON data.
 1. Transforms JSON data into rows and columns.
 1. Handles potential column name conflicts (like "ID").
-1. Optionally includes metadata and sorts data based on the _PORTABLE_ID.
+1. Optionally includes metadata columns (_PORTABLE_ID, _PORTABLE_EXTRACTED)
+1. Sorts data based on the _PORTABLE_ID.
 
 Refer to the macro code for detailed implementation.
 
@@ -154,9 +135,3 @@ Create a new branch for your feature or bug fix.
 Make changes and test your code.
 Submit a pull request with a clear description of the changes.
 
-## Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
