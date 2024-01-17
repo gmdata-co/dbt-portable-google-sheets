@@ -58,7 +58,7 @@ or
 {{ portable_google_sheets.portable_google_sheets( 'google_sheets', 'my_sheets_data', include_metadata=True, keep_sort=False ) }}
 ```
 
-The macro will create the SQL needed to split this varient data into seperate columns.
+The macro will create the SQL needed to split this variant data into separate columns.
 
 ### Arguments
 
