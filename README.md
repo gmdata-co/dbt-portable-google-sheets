@@ -4,7 +4,7 @@
 
 This dbt macro is designed to transform data written by the Portable ([portable.io](https://portable.io)) Google Sheets Connector in your Snowflake account.
 
-Portable writes data in JSON format, and this macro efficiently converts the payload back into standard columns and rows. This is particularly useful for dbt users who need to integrate Google Sheets data into their analytical workflows.
+Portable writes data in JSON or Variant format; this macro efficiently converts the payload back into its original shape, columns with headers. This is particularly useful for dbt users who need to integrate Google Sheets data into their analytical workflows.
 
 See [Example Output](#example-output) for more details.
 
@@ -119,8 +119,8 @@ We will release an update shortly to handle data with no headers.
 ## Macro Details
 The portable_google_sheets macro performs the following operations:
 
-1. Extracts column names from the JSON data.
-1. Transforms JSON data into rows and columns.
+1. Extracts column names from the Variant data.
+1. Transforms Variant data into rows and columns.
 1. Handles potential column name conflicts (like "ID").
 1. Optionally includes metadata columns (_PORTABLE_ID, _PORTABLE_EXTRACTED)
 1. Sorts data based on the _PORTABLE_ID.
