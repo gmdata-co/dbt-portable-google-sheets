@@ -18,7 +18,7 @@ To use this macro in your dbt project, add the following to your `packages.yml` 
 ```yaml
 packages:
   - package: gmdata-co/portable_google_sheets
-    version: 0.1.1
+    version: 0.1.3
 ```
 
 Run `dbt deps` to install the package.
